@@ -1,18 +1,26 @@
 import React from 'react';
 import avatar from '../images/profile__avatar.jpg';
 import api from '../utils/api';
+import Card from './Card';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
   const [userName, setUserName] = React.useState('Жак-Ив Кусто');
   const [userDescription, setUserDescription] = React.useState('Исследователь океана');
   const [userAvatar, setUserAvatar] = React.useState(avatar);
+  const [cards, setCards] = React.useState([]);
+
   // Загрузка сохраненный данный о пользователе с сервера
   api.getUserInfo()
     .then(userData => {
       setUserName(userData.name);
       setUserDescription(userData.about);
       setUserAvatar(userData.avatar);
+    }).catch(err => console.error(err));
+
+  api.getInitialCards()
+    .then(cardsData => {
+      setCards(cardsData)
     }).catch(err => console.error(err));
 
   return (
@@ -34,79 +42,25 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
 
       <section className="cards">
         <ul className="cards__list">
-
+          {cards.map(card => {
+            return (
+              <Card card={card} onCardClick={onCardClick} />
+            );
+          })
+          }
         </ul>
       </section>
-
-      {/* <!-- Попап - Добавление картчки --> */}
-      {/* <article className="popup popup_place_add-card">
-        <form className="popup__container" name="add-place" novalidate>
-          <h2 className="popup__title">Новое место</h2>
-          <label className="popup__field">
-            <input className="popup__input" type="text" placeholder="Название" name="name" required minlength="2"
-              maxlength="30" />
-            <span className="popup__input-error tittle-place-error"></span>
-          </label>
-          <label className="popup__field">
-            <input className="popup__input" type="url" placeholder="Ссылка на картинку" name="link" required />
-            <span className="popup__input-error link-img-place-error"></span>
-          </label>
-          <button className="popup__save" type="submit">Создать</button>
-          <button className="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
-        </form>
-      </article> */}
-
-      {/* <!-- Попап - профиль --> */}
-      {/* <article className="popup popup_place_profile">
-        <form className="popup__container" name="edit-profile" novalidate>
-          <h2 className="popup__title">Редактировать&nbsp;профиль</h2>
-          <label className="popup__field">
-            <input className="popup__input" type="text" placeholder="Имя" name="name" required minlength="2" maxlength="40" />
-            <span className="popup__input-error name-profile-error"></span>
-          </label>
-          <label className="popup__field">
-            <input className="popup__input" type="text" placeholder="Работа" name="about" required minlength="2"
-              maxlength="200" />
-            <span className="popup__input-error job-profile-error"></span>
-          </label>
-          <button className="popup__save" type="submit">Сохранить</button>
-          <button className="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
-        </form>
-      </article> */}
-
-      {/* <!-- Попап - изменить аватар --> */}
-      {/* <article className="popup popup_place_avatar">
-        <form className="popup__container" name="avatar-photo" novalidate>
-          <h2 className="popup__title">Обновить аватар</h2>
-          <label className="popup__field">
-            <input className="popup__input" type="url" placeholder="Ссылка на картинку" name="link" required />
-            <span className="popup__input-error link-img-place-error"></span>
-          </label>
-          <button className="popup__save" type="submit">Сохранить</button>
-          <button className="popup__close popup__close_add-card" type="button" aria-label="Закрыть"></button>
-        </form>
-      </article> */}
-
-      {/* <!-- Попап - Показать картинку --> */}
-      {/* <div className="popup popup_place_img">
-        <div className="popup__img-container">
-          <img className="popup__img" alt="Здесь должно быть изображение" src="<%=require('./images/profile__avatar.jpg')%>" />
-          <p className="popup__img-caption"></p>
-          <button className="popup__close" type="button" aria-label="Закрыть"></button>
-        </div>
-      </div> */}
-
-      {/* <!-- Попап удаления карточки --> */}
-      {/* <article className="popup popup_place_trash-card">
-        <form className="popup__container" name="trash-card" novalidate>
-          <h2 className="popup__title">Вы уверены?</h2>
-          <button className="popup__save" type="submit">Да</button>
-          <button className="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
-        </form>
-      </article> */}
-
     </main>
   );
 }
 
 export default Main;
+
+// {likes: Array(0), _id: "608da4570459480041e0567c", name: "Иди обниму", link: "https://i02.appmifile.com/232_bbs_en/07/07/2020/60b60fbcef.jpg", owner: {…}, …}
+// createdAt: "2021-05-01T18:56:23.798Z"
+// likes: []
+// link: "https://i02.appmifile.com/232_bbs_en/07/07/2020/60b60fbcef.jpg"
+// name: "Иди обниму"
+// owner: {name: "Оленина Рогаченко", about: "Жительница леса", avatar: "https://ic.pics.livejournal.com/mik_sazonov/25345481/60092/60092_original.jpg", _id: "1236c228a99f858dca66c4f6", cohort: "cohort-22"}
+// _id: "608da4570459480041e0567c"
+// __proto__: Object

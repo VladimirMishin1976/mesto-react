@@ -1,4 +1,4 @@
-function ImagePopup({ type, placeholder, minlength, name, maxlength }) {
+function InputPopup({ type, placeholder, minlength, name, maxlength }) {
   return (
     <label className="popup__field">
       <input className="popup__input" type={type} placeholder={placeholder}
@@ -7,4 +7,4 @@ function ImagePopup({ type, placeholder, minlength, name, maxlength }) {
     </label>
   );
 }
-export default ImagePopup;
+export default InputPopup;

@@ -1,10 +1,10 @@
-function ImagePopup() {
+function ImagePopup({ card, onClose }) {
   return (
-    <div className="popup popup_place_img">
+    <div className={`popup popup_type_image ${card ? 'popup_opened' : ''}`}>
       <div className="popup__img-container">
-        <img className="popup__img" alt="Здесь должно быть изображение" src="<%=require('./images/profile__avatar.jpg')%>" />
-        <p className="popup__img-caption"></p>
-        <button className="popup__close" type="button" aria-label="Закрыть"></button>
+        <img className="popup__img" alt={card.name} src={card.link} />
+        <p className="popup__img-caption">{card.name}</p>
+        <button className="popup__close" type="button" aria-label="Закрыть" onClick={onClose}></button>
       </div>
     </div>
   );

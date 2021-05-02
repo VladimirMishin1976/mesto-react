@@ -11,6 +11,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -24,18 +25,26 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard(false);
   }
 
   return (
     <div className="page">
       <div className="container">
         <Header />
-        <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick} />
+        <Main onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
+        />
         <Footer />
 
         {/* <!-- Попап - редактировать профиль --> */}
@@ -59,22 +68,7 @@ function App() {
         <PopupWithForm title="Вы уверены?" name='confirm-delete-card' onClose={closeAllPopups} />
 
         {/* <!-- Попап - Показать картинку --> */}
-        <ImagePopup onClose={closeAllPopups} />
-
-        {/* <!-- шаблон карточки --> */}
-        <template className="template-card">
-          <li className="card">
-            <img className="card__image" src="#" alt="#" />
-            <div className="card__contain">
-              <h3 className="card__caption"></h3>
-              <div className="card__like-contain">
-                <button className="card__like" type="button" aria-label="Лайкнуть"></button>
-                <p className="card__like-count">test</p>
-              </div>
-              <button className="card__trash" type="button" aria-label="Удалить"></button>
-            </div>
-          </li>
-        </template>
+        <ImagePopup onClose={closeAllPopups} card={selectedCard} />
       </div>
     </div>
   );
