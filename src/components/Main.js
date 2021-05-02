@@ -1,17 +1,32 @@
+import React from 'react';
+import avatar from '../images/profile__avatar.jpg';
+import api from '../utils/api';
+
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+
+  const [userName, setUserName] = React.useState('Жак-Ив Кусто');
+  const [userDescription, setUserDescription] = React.useState('Исследователь океана');
+  const [userAvatar, setUserAvatar] = React.useState(avatar);
+  // Загрузка сохраненный данный о пользователе с сервера
+  api.getUserInfo()
+    .then(userData => {
+      setUserName(userData.name);
+      setUserDescription(userData.about);
+      setUserAvatar(userData.avatar);
+    }).catch(err => console.error(err));
 
   return (
     <main className="content">
 
       <section className="profile">
         <div className="profile__avatar-container" onClick={onEditAvatar}>
-          <img className="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>" alt="Аватар пользователя" />
+          <img className="profile__avatar" src={userAvatar} alt="Аватар пользователя" />
           <div className="profile__aratar-pointer"></div>
         </div>
         <div className="profile__container">
-          <h1 className="profile__title">Жак-Ив Кусто</h1>
+          <h1 className="profile__title">{userName}</h1>
           <button className="profile__edit-button" type="button" aria-label="Закрыть" onClick={onEditProfile}></button>
-          <p className="profile__subtitle">Исследователь океана</p>
+          <p className="profile__subtitle">{userDescription}</p>
         </div>
 
         <button className="profile__add-button" type="button" aria-label="Добавить фото" onClick={onAddPlace}></button>
