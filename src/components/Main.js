@@ -42,9 +42,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
       <section className="cards">
         <ul className="cards__list">
-          {cards.map(card => {
+          {cards.map((card, i) => {
             return (
-              <Card card={card} onCardClick={onCardClick} />
+              <Card card={card} onCardClick={onCardClick} key={card._id} />
             );
           })
           }

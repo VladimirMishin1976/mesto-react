@@ -5,7 +5,7 @@ function Card({ card, onCardClick }) {
   }
 
   return (
-    <li className="card" key={card._id}>
+    <li className="card">
       <img className="card__image" src={card.link} alt={card.name} onClick={handleClick} />
       <div className="card__contain">
         <h3 className="card__caption">{card.name}</h3>
