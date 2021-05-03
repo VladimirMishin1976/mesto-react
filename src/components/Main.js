@@ -11,17 +11,19 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [cards, setCards] = React.useState([]);
 
   // Загрузка сохраненный данный о пользователе с сервера
-  api.getUserInfo()
-    .then(userData => {
-      setUserName(userData.name);
-      setUserDescription(userData.about);
-      setUserAvatar(userData.avatar);
-    }).catch(err => console.error(err));
+  React.useEffect(() => {
+    api.getUserInfo()
+      .then(userData => {
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+      }).catch(err => console.error(err));
 
-  api.getInitialCards()
-    .then(cardsData => {
-      setCards(cardsData)
-    }).catch(err => console.error(err));
+    api.getInitialCards()
+      .then(cardsData => {
+        setCards(cardsData)
+      }).catch(err => console.error(err));
+  }, []);
 
   return (
     <main className="content">

@@ -3,7 +3,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import InputPopup from './InputPopup';
+import Input from './Input';
 import React from 'react';
 
 function App() {
@@ -48,21 +48,21 @@ function App() {
         <Footer />
 
         {/* <!-- Попап - редактировать профиль --> */}
-        <PopupWithForm title="Редактировать&nbsp;профиль" name='edit-profile' isOpen={isEditProfilePopupOpen}
+        <PopupWithForm title="Редактировать&nbsp;профиль" buttonText='Сохранить' name='edit-profile' isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}>
-          {<InputPopup type="text" placeholder="Имя" name="name" minlength="2" maxlength="40" />}
-          {<InputPopup type="text" placeholder="Работа" name="about" minlength="2" maxlength="200" />}
+          <Input type="text" placeholder="Имя" name="name" minlength="2" maxlength="40" />
+          <Input type="text" placeholder="Работа" name="about" minlength="2" maxlength="200" />
         </PopupWithForm>
 
         {/* <!-- Попап - Добавление картчки --> */}
-        <PopupWithForm title="Новое место" name='add-card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-          {<InputPopup type="text" placeholder="Название" name="name" minlength="2" maxlength="30" />}
-          {<InputPopup type="url" placeholder="Ссылка на картинку" name="link" />}
+        <PopupWithForm title="Новое место" buttonText='Создать' name='add-card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+          <Input type="text" placeholder="Название" name="name" minlength="2" maxlength="30" />
+          <Input type="url" placeholder="Ссылка на картинку" name="link" />
         </PopupWithForm>
 
         {/* <!-- Попап - изменить аватар --> */}
-        <PopupWithForm title="Обновить аватар" name='edit-avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          {<InputPopup type="url" placeholder="Ссылка на картинку" name="link" />}
+        <PopupWithForm title="Обновить аватар" buttonText='Сохранить' name='edit-avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+          <Input type="url" placeholder="Ссылка на картинку" name="link" />
         </PopupWithForm>
         {/* <!-- Попап удаления карточки --> */}
         <PopupWithForm title="Вы уверены?" name='confirm-delete-card' onClose={closeAllPopups} />
