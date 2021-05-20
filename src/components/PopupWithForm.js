@@ -1,7 +1,7 @@
-function PopupWithForm({ title, name, isOpen, onClose, buttonText, children }) {
+function PopupWithForm({ title, name, isOpen, onClose, buttonText, children, onSubmit }) {
   return (
-    <article className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
-      <form className="popup__container" name={name} noValidate>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
+      <form className="popup__container" name={name} noValidate onSubmit={onSubmit}>
         <h2 className="popup__title">{title}</h2>
 
         {children}
@@ -9,7 +9,7 @@ function PopupWithForm({ title, name, isOpen, onClose, buttonText, children }) {
         <button className="popup__save" type="submit">{buttonText}</button>
         <button className="popup__close popup__close_profile" type="button" aria-label="Закрыть" onClick={onClose}></button>
       </form>
-    </article>
+    </div>
   );
 }
 

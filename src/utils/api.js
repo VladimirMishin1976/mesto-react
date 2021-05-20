@@ -21,7 +21,7 @@ class Api {
       }).then(this._checkResponse);
   }
 
-  editUserInfo({ name, about }) { //3. Редактирование профиля
+  setUserInfo({ name, about }) { //3. Редактирование профиля
     return fetch(`${this._address}/users/me`,
       {
         method: 'PATCH',
@@ -61,8 +61,8 @@ class Api {
       }).then(this._checkResponse);
   }
 
-  removeCard() {  // 7. Удаление карточки
-    return fetch(`${this._address}/cards/${this.elem._id}`,
+  removeCard(cardId) {  // 7. Удаление карточки
+    return fetch(`${this._address}/cards/${cardId}`,
       {
         method: 'DELETE',
         headers: {
@@ -77,29 +77,28 @@ class Api {
   }
 
   // 8. Постановка и снятие лайка
-  deleteLike() {
-    return fetch(`${this._address}/cards/likes/${this.elem._id}`,
-      {
-        method: 'Delete',
-        headers: {
-          authorization: this._token
-        }
-      }).then(this._checkResponse);
-  }
-
-  putLike() {
-    return fetch(`${this._address}/cards/likes/${this.elem._id}`,
-      {
-        method: 'PUT',
-        headers: {
-          authorization: this._token
-        }
-
-      }).then(this._checkResponse);
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return fetch(`${this._address}/cards/likes/${cardId}`,
+        {
+          method: 'Delete',
+          headers: {
+            authorization: this._token
+          }
+        }).then(this._checkResponse);
+    } else {
+      return fetch(`${this._address}/cards/likes/${cardId}`,
+        {
+          method: 'PUT',
+          headers: {
+            authorization: this._token
+          }
+        }).then(this._checkResponse);
+    }
   }
 
   // 9. Обновление аватара пользователя
-  editAvatarPhoto({ link }) {
+  editAvatarPhoto({ avatar }) {
     return fetch(`${this._address}/users/me/avatar`,
       {
         method: "PATCH",
@@ -108,7 +107,7 @@ class Api {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          avatar: link
+          avatar: avatar
         })
       }).then(this._checkResponse);
   }
