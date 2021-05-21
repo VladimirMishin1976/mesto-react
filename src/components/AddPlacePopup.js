@@ -5,6 +5,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   const [nameCard, setNameCard] = React.useState('');
   const [linkCardImage, setLinkCardImage] = React.useState('');
 
+  React.useEffect(_ => {
+    setNameCard('');
+    setLinkCardImage('');
+  }, [isOpen]);
+
   function handleChangeNameCard(e) {
     setNameCard(e.target.value);
   }

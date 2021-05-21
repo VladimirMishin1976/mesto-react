@@ -16,14 +16,15 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({name: 'Жак-Ив Кусто', about: 'Исследователь'});
   const [cards, setCards] = React.useState([]);
 
-  // Загрузка сохраненный данный о пользователе с сервера
+  // Загрузка сохраненных данных о пользователе + карточках с сервера
   React.useEffect(() => {
-    api.getInitialCards()
-      .then(cardsData => {
-        setCards(cardsData)
+    Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cardsData, userData]) => {
+        setCards(cardsData);
+        setCurrentUser(userData);
       }).catch(err => console.error(err));
   }, []);
 
@@ -46,15 +47,6 @@ function App() {
         })
       }).catch(err => console.error(err));
   }
-
-
-  React.useEffect(() => {
-    api.getUserInfo()
-      .then(userData => {
-        setCurrentUser(userData);
-      }).catch(err => console.error(err));
-  }, []);
-
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -99,10 +91,10 @@ function App() {
     api.addCard(name, link)
       .then(card => {
         closeAllPopups();
-        setCards([card, ...cards])
+        setCards([card, ...cards]);
       }).catch(err => console.error(err));
 
-  } 
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
